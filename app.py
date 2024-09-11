@@ -55,7 +55,7 @@ def extract_text_from_docx(docx_file):
         text += para.text + "\n"
     return text
 
-def generate_response(message: str, system_prompt: str, temperature: float = 0.5, max_tokens: int = 512):
+def generate_response(message: str, system_prompt: str, temperature: float, max_tokens: int):
     conversation = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": message}
@@ -71,27 +71,25 @@ def generate_response(message: str, system_prompt: str, temperature: float = 0.5
 
     return response.choices[0].message.content
 
-def analyze_resume(resume_text, job_description):
+    
+def analyze_resume(resume_text, job_description, temperature, max_tokens):
     prompt = f"""
-    Please analyze the following resume in the context of the job description provided. Strictly check every single line in the job description and analyze the resume for exact matches. Maintain high ATS standards and give scores only to the correct matches. Focus on missing hard skills and soft skills. Provide the following details:
-
+    Please analyze the following resume in the context of the job description provided. Strictly check every single line in the job description and analyze the resume for exact matches. Maintain high ATS standards and give scores only to the correct matches. Focus on missing core skills and soft skills. Provide the following details:
     1. The match percentage of the resume to the job description.
-    2. A list of accurate missing keywords.
+    2. A list of missing keywords.
     3. Final thoughts on the resume's overall match with the job description in 3 lines.
     4. Recommendations on how to add the missing keywords and improve the resume in 3-4 points with examples.
-
     Job Description: {job_description}
     Resume: {resume_text}
     """
-    return generate_response(prompt, "You are an expert ATS resume analyzer.")
+    return generate_response(prompt, "You are an expert ATS resume analyzer.", temperature, max_tokens)
 
-def rephrase_text(text):
+def rephrase_text(text, temperature, max_tokens):
     prompt = f"""
     Please rephrase the following text according to ATS standards, including quantifiable measures and improvements where possible. Maintain precise and concise points which will pass ATS screening:
-
     Original Text: {text}
     """
-    return generate_response(prompt, "You are an expert in rephrasing content for ATS optimization.")
+    return generate_response(prompt, "You are an expert in rephrasing content for ATS optimization.", temperature, max_tokens)
 
 def clear_conversation():
     return [], None
@@ -135,13 +133,13 @@ with gr.Blocks(css=CSS, theme="Nymbo/Nymbo_Theme") as demo:
 
     analyze_btn.click(
         analyze_resume,
-        inputs=[resume_content, job_description],
+        inputs=[resume_content, job_description, temperature, max_tokens],
         outputs=[output]
     )
 
     rephrase_btn.click(
         rephrase_text,
-        inputs=[text_to_rephrase],
+        inputs=[text_to_rephrase, temperature, max_tokens],
         outputs=[rephrased_output]
     )
 
