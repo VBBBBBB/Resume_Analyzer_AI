@@ -182,29 +182,20 @@ with gr.Blocks(css=CSS, theme="Nymbo/Nymbo_Theme") as demo:
 
     with gr.Tab("Cover Letter Generator"):
         gr.HTML(COVER_LETTER_DISCLAIMER)
-        with gr.Row():
-            with gr.Column():
-                cl_job_description = gr.Textbox(label="Job Description", lines=5)
-                cl_resume_content = gr.Textbox(label="Resume Content", lines=10)
-            with gr.Column():
-                generate_cl_btn = gr.Button("Generate Cover Letter")
-                cover_letter_output = gr.Markdown()
+        generate_cl_btn = gr.Button("Generate Cover Letter")
+        cover_letter_output = gr.Markdown()
 
-    with gr.Tab("Interview Questions"):
+    with gr.Tab("Interview Questions Generator"):
         gr.HTML(INTERVIEW_QUESTIONS_DISCLAIMER)
-        with gr.Row():
-            with gr.Column():
-                iq_job_description = gr.Textbox(label="Job Description", lines=5)
-            with gr.Column():
-                generate_iq_btn = gr.Button("Generate Interview Questions")
-                interview_questions_output = gr.Markdown()
+        generate_iq_btn = gr.Button("Generate Interview Questions")
+        interview_questions_output = gr.Markdown()
 
     with gr.Accordion("⚙️ Parameters", open=False):
         temperature = gr.Slider(
             minimum=0, maximum=1, step=0.1, value=0.5, label="Temperature",
         )
         max_tokens = gr.Slider(
-            minimum=50, maximum=1024, step=1, value=512, label="Max tokens",
+            minimum=50, maximum=1024, step=1, value=1024, label="Max tokens",
         )
         
     def update_job_description_visibility(with_job_description):
@@ -215,6 +206,7 @@ with gr.Blocks(css=CSS, theme="Nymbo/Nymbo_Theme") as demo:
         inputs=[with_job_description],
         outputs=[job_description]
     )
+
     def process_resume(file):
         if file is not None:
             file_type = file.name.split('.')[-1].lower()
@@ -236,6 +228,18 @@ with gr.Blocks(css=CSS, theme="Nymbo/Nymbo_Theme") as demo:
         rephrase_text,
         inputs=[text_to_rephrase, temperature, max_tokens],
         outputs=[rephrased_output]
+    )
+
+    generate_cl_btn.click(
+        generate_cover_letter,
+        inputs=[resume_content, job_description, temperature, max_tokens],
+        outputs=[cover_letter_output]
+    )
+
+    generate_iq_btn.click(
+        generate_interview_questions,
+        inputs=[job_description, temperature, max_tokens],
+        outputs=[interview_questions_output]
     )
 
     gr.HTML(FOOTER_TEXT)
