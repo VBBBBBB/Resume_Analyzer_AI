@@ -38,22 +38,8 @@ FOOTER_TEXT = """
 </footer>
 """
 
-COVER_LETTER_DISCLAIMER = """
-<p style="font-style: italic; color: #888;">
-Disclaimer: This cover letter is generated based on the provided job description and resume. 
-It should be carefully reviewed and tailored to your specific needs and the company's requirements before use.
-</p>
-"""
-
-INTERVIEW_QUESTIONS_DISCLAIMER = """
-<p style="font-style: italic; color: #888;">
-Disclaimer: These interview questions are generated based on the provided job description. 
-They should be reviewed and adjusted to better fit the specific role, company culture, and interview process.
-</p>
-"""
-
 RESUME_ANALYZER_INSTRUCTIONS = """
-<div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+<div style="background-color: #000000; color: #ffffff; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
     <p><strong>Instructions:</strong></p>
     <ul>
         <li>Upload your resume (PDF or DOCX) in the file upload area.</li>
@@ -65,7 +51,7 @@ RESUME_ANALYZER_INSTRUCTIONS = """
 """
 
 COVER_LETTER_INSTRUCTIONS = """
-<div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+<div style="background-color: #000000; color: #ffffff; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
     <p><strong>Instructions for Cover Letter Generation:</strong></p>
     <ol>
         <li>First, go to the "Resume Analyzer" tab.</li>
@@ -76,10 +62,25 @@ COVER_LETTER_INSTRUCTIONS = """
 """
 
 INTERVIEW_QUESTIONS_INSTRUCTIONS = """
-<div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
+<div style="background-color: #000000; color: #ffffff; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
     <p><strong>Instructions for Interview Questions Generation:</strong></p>
     <p>Enter the job description in the text box below and click "Generate Interview Questions".</p>
 </div>
+"""
+
+# Also update the disclaimer styles to match
+COVER_LETTER_DISCLAIMER = """
+<p style="font-style: italic; color: #cccccc; background-color: #000000; padding: 10px; border-radius: 5px;">
+Disclaimer: This cover letter is generated based on the provided job description and resume. 
+It should be carefully reviewed and tailored to your specific needs and the company's requirements before use.
+</p>
+"""
+
+INTERVIEW_QUESTIONS_DISCLAIMER = """
+<p style="font-style: italic; color: #cccccc; background-color: #000000; padding: 10px; border-radius: 5px;">
+Disclaimer: These interview questions are generated based on the provided job description. 
+They should be reviewed and adjusted to better fit the specific role, company culture, and interview process.
+</p>
 """
 
 TITLE = "<h1>📄 ATS Resume Analyzer 📄</h1>"
