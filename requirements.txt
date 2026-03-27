@@ -1,5 +1,8 @@
-gradio
+fastapi
+uvicorn[standard]
+python-multipart
 groq
 PyPDF2
 python-docx
 python-dotenv
+gradio
