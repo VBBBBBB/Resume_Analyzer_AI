@@ -11,17 +11,16 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # ─── Configuration ────────────────────────────────────────────────────────────
-
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 client = Groq(api_key=GROQ_API_KEY)
 
 # ─── App Setup ────────────────────────────────────────────────────────────────
-
 app = FastAPI(title="Resume Analyzer AI", version="2.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -209,4 +208,5 @@ async def api_generate_interview_questions(body: InterviewQuestionsRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port)
